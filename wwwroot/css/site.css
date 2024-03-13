@@ -1,0 +1,68 @@
+﻿body {
+    background-color: #1e1e1e; /* Цвет фона страницы */
+    font-family: Arial, sans-serif; /* Шрифт для текста на странице */
+    color: #ffffff; /* Цвет текста */
+}
+
+table {
+    width: 100%; /* Ширина таблицы на всю страницу */
+    border-collapse: collapse; /* Убрать двойные границы между ячейками */
+    margin-bottom: 20px; /* Отступ снизу для таблицы */
+}
+
+th, td {
+    border: 1px solid #646464; /* Цвет границ ячеек */
+    padding: 8px; /* Отступ внутри ячеек */
+    text-align: left; /* Выравнивание текста по левому краю */
+    font-size: 0.9em; /* Размер шрифта в ячейках */
+}
+
+th {
+    background-color: #333333; /* Цвет фона заголовков */
+    color: #ffffff; /* Цвет текста заголовков */
+    font-size: 1em; /* Размер шрифта заголовков */
+    cursor: pointer;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #2a2a2a; /* Цвет фона для нечетных строк таблицы */
+}
+
+tbody tr:nth-child(even) {
+    background-color: #242424; /* Цвет фона для четных строк таблицы */
+}
+
+tbody tr:hover {
+    background-color: #3d3d3d; /* Цвет фона строки при наведении */
+}
+
+.pagination {
+    text-align: center; /* Выравнивание пагинации по центру */
+    margin-top: 20px; /* Отступ сверху для пагинации */
+}
+
+.pagination button {
+    border: 1px solid #646464; /* Цвет границ кнопок */
+    background-color: #333333; /* Цвет фона кнопок */
+    color: #ffffff; /* Цвет текста кнопок */
+    padding: 8px 16px; /* Отступ внутри кнопок */
+    margin: 0 2px; /* Отступ между кнопками */
+    cursor: pointer; /* Курсор в виде указателя */
+}
+
+    .pagination button:hover {
+        background-color: #454545; /* Цвет фона кнопок при наведении */
+    }
+
+/* Класс для активной страницы пагинации */
+.pagination .active {
+    background-color: #575757;
+    border-color: #575757;
+}
+
+/* Скрыть ненужные элементы на маленьких экранах */
+@media screen and (max-width: 768px) {
+    .hide-on-small {
+        display: none;
+    }
+}
