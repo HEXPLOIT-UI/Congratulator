@@ -86,8 +86,8 @@ document.getElementById('editButton').addEventListener('click', function () {
             let cells = row.querySelectorAll('td');
             let data = {};
             data.id = row.getAttribute('data-id');
-            data.fullName = cells[0].innerText;
-            data.birthdayDate = cells[1].innerText;
+            data.fullName = cells[1].innerText;
+            data.birthdayDate = cells[2].innerText;
             // здесь код для отправки данных на сервер
             console.log("отправлен запрос на изменение след.данных: id: " + data.id + " name: " + data.fullName + " date: " + data.birthdayDate);
             var params = new URLSearchParams(data).toString();

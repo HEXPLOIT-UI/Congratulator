@@ -86,10 +86,8 @@ namespace Congratulator.Services
                 count++;
                 result += "ФИО, ";
             }
-            if (!string.IsNullOrEmpty(birthday) && model.BirthdayDate.ToString("yyyy-MM-dd") != DateTimeOffset.Parse(birthday).ToString("yyyy-MM-dd"))
+            if (!string.IsNullOrEmpty(birthday) && model.BirthdayDate != DateTimeOffset.Parse(birthday))
             {
-                Console.WriteLine(model.BirthdayDate.ToString("yyyy-MM-dd") + " " + DateTimeOffset.Parse(birthday).ToString("yyyy-MM-dd"));
-
                 model.BirthdayDate = DateTimeOffset.Parse(birthday);
                 count++;
                 result += "Дата рождения, ";

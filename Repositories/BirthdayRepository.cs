@@ -15,7 +15,7 @@ namespace Congratulator.Repositories
 
         public IEnumerable<BirthdayModelDTO> GetAllBirthdays()
         {
-            return _collection.Find(b => true).ToList().Select(birthday => new BirthdayModelDTO
+            return _collection.Find(Builders<BirthdayModel>.Filter.Empty).ToList().Select(birthday => new BirthdayModelDTO
             {
                 Id = birthday.Id.ToString(),
                 FullName = birthday.FullName,
@@ -53,34 +53,52 @@ namespace Congratulator.Repositories
         {
             var today = DateTime.Today;
             var nextWeek = today.AddDays(7);
+            var birthdays = _collection.Find(_ => true).ToList();
 
-            var filter = Builders<BirthdayModel>.Filter.Gte(x => x.BirthdayDate, today) &
-                         Builders<BirthdayModel>.Filter.Lt(x => x.BirthdayDate, nextWeek);
-            var birthdays = _collection.Find(filter).ToList();
-            var birthdayViewModels = birthdays.Select(birthday => new BirthdayModelDTO
+            var upcomingBirthdays = birthdays.Where(birthday =>
+            {
+                var thisYearBirthday = new DateTime(today.Year, birthday.BirthdayDate.Month, birthday.BirthdayDate.Day);
+                var nextYearBirthday = new DateTime(today.Year + 1, birthday.BirthdayDate.Month, birthday.BirthdayDate.Day);
+                return (thisYearBirthday >= today && thisYearBirthday < nextWeek) ||
+                       (today.Month == 12 && nextWeek.Month == 1 && nextYearBirthday < nextWeek);
+            })
+            .Select(birthday => new BirthdayModelDTO
             {
                 Id = birthday.Id.ToString(),
                 FullName = birthday.FullName,
                 BirthdayDate = birthday.BirthdayDate,
                 ProfileImageUri = File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", birthday.Id.ToString() + ".jpg")) ? birthday.Id.ToString() + ".jpg" : "default.jpg"
             });
-            return birthdayViewModels;
+
+            return upcomingBirthdays;
         }
+
 
         public IEnumerable<BirthdayModel> GetTodayBirthdays()
         {
             var today = DateTime.Today;
-            var filter = Builders<BirthdayModel>.Filter.Eq(x => x.BirthdayDate, today);
-            var todayBirthdays = _collection.Find(filter).ToList();
+            var allBirthdays = _collection.Find(Builders<BirthdayModel>.Filter.Empty).ToList();
+            var todayBirthdays = allBirthdays.Where(birthday =>birthday.BirthdayDate.Month == today.Month && birthday.BirthdayDate.Day == today.Day).ToList();
             return todayBirthdays;
         }
+
 
         public IEnumerable<BirthdayModel> getBirthdaysToNotificate(int daysToNotificate)
         {
             var targetDate = DateTime.Today.AddDays(daysToNotificate);
-            var filter = Builders<BirthdayModel>.Filter.Eq(x => x.BirthdayDate, targetDate);
-            var docs = _collection.Find(filter).ToList();
-            return docs;
+            var allBirthdays = _collection.Find(_ => true).ToList();
+            var relevantBirthdays = allBirthdays.Where(birthday =>
+            {
+                var adjustedBirthday = new DateTime(DateTime.Today.Year, birthday.BirthdayDate.Month, birthday.BirthdayDate.Day);
+                if (adjustedBirthday < DateTime.Today)
+                {
+                    adjustedBirthday = adjustedBirthday.AddYears(1);
+                }
+                return adjustedBirthday == targetDate;
+            });
+
+            return relevantBirthdays;
         }
+
     }
 }
