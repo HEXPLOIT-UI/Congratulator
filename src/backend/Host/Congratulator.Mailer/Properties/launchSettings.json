@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Congratulator.Mailer": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

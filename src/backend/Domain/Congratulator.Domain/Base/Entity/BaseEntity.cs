@@ -3,7 +3,7 @@
 /// <summary>
 /// Базовый класс для всех сущностей.
 /// </summary>
-public class BaseEntity
+public abstract class BaseEntity
 {
     /// <summary>
     /// Идентификатор записи.
