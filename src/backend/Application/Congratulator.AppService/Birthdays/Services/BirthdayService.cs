@@ -98,7 +98,7 @@ public class BirthdayService : IBirthdayService
         }
         catch (ArgumentNullException)
         {
-            return Result<BirthdayDTO>.Failure(new RecordNotFound("User", request.EntityId.ToString()));
+            return Result<BirthdayDTO>.Failure(new RecordNotFound("Birthday", request.EntityId.ToString()));
         }
         catch
         {

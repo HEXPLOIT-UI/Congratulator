@@ -14,7 +14,7 @@ public class BirthdayNotificationService : BackgroundService
 {
     private readonly IServiceProvider _services;
     private readonly ILogger<BirthdayNotificationService> _logger;
-    private readonly TimeSpan _checkInterval = TimeSpan.FromSeconds(5);
+    private readonly TimeSpan _checkInterval = TimeSpan.FromHours(12);
 
     public BirthdayNotificationService(IServiceProvider services, ILogger<BirthdayNotificationService> logger)
     {

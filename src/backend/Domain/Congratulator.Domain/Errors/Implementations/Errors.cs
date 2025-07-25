@@ -29,3 +29,14 @@ public record AuthorizationFailed(string Reason)
             Code: "AUTH_FAILED",
             Description: $"Не удалось авторизовать пользователя. {Reason}"
           );
+public record UnsupportedFileType(string Reason)
+        : DomainError(
+            Code: "UNSUPPORTED_FILE_TYPE",
+            Description: $"{Reason}"
+          );
+
+public record EmptyData(string Parameter)
+        : DomainError(
+            Code: "EMPTY_DATA",
+            Description: $"Параметр {Parameter} ожидает данные, которые не были предоставлены"
+          );
